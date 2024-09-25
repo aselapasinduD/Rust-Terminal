@@ -4,7 +4,6 @@ use std::io::{self, Write};
 use std::process::{Command, Stdio};
 use std::env;
 use winapi::um::consoleapi::AllocConsole;
-use std::path::Path;
 
 mod shell_commands;
 
@@ -35,15 +34,8 @@ fn main() {
         };
         let args: Vec<&str> = parts.collect();
 
-        if command == "cd" {
-            if args.is_empty() {
-                eprintln!("cd: missing operand");
-            } else {
-                let new_path = Path::new(args[0]);
-                if let Err(e) = env::set_current_dir(&new_path){
-                    println!("cd: {}", e);
-                }
-            }
+        if shell_commands::is_command_in_shell(command) {
+            shell_commands::handle_shell_commands(command, &args);
             continue;
         }
 
