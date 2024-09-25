@@ -1,6 +1,6 @@
 use std::env;
 use std::path::Path;
-use std::io::{self, Write};
+use std::io::{self};
 
 const SHELL_COMMANDS: &[&str] = &["cd", "help"];
 
